@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 396 274" width="396" height="274" role="img" aria-labelledby="t d">
-<title id="t">Library Management System (database app)</title><desc id="d">A whole library: checkouts, reservations, auto fines, overdue alerts, reports...all in a desktop app.</desc>
+<title id="t">Library Management System (database)</title><desc id="d">A full MySQL library system: 3NF schema, procedures, triggers and 10 reports. Tkinter app in progress.</desc>
 <defs><linearGradient id="tbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1032"/><stop offset="1" stop-color="#05060f"/></linearGradient>
 <radialGradient id="tglow"><stop offset="0" stop-color="#d8bd78" stop-opacity=".95"/><stop offset=".6" stop-color="#b89c60" stop-opacity=".45"/><stop offset="1" stop-color="#b89c60" stop-opacity="0"/></radialGradient>
 <clipPath id="tcell"><rect x="22" y="22" width="58" height="58" rx="14"/></clipPath>
@@ -13,9 +13,9 @@
   <rect x="22" y="22" width="58" height="58" rx="14" fill="#121741"/>
   <circle cx="51" cy="51" r="30" fill="url(#tglow)" opacity="0.3" clip-path="url(#tcell)"/>
   <g transform="translate(33,33) scale(1.5)" fill="none" stroke="#ebdfb9" stroke-opacity="0.65" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></g>
-  <text class="mono" x="94" y="55" font-size="11" letter-spacing="2" fill="#b89c60">DATABASE APP</text>
+  <text class="mono" x="94" y="55" font-size="11" letter-spacing="2" fill="#b89c60">DATABASE</text>
   <text class="serif" x="22" y="118" font-size="28" font-weight="600" fill="#f3efe6">Library Management System</text>
-  <text class="serif" x="22" y="152" font-size="18.5" font-weight="500" fill="#c3c2d6">A whole library: checkouts, reservations,</text><text class="serif" x="22" y="174" font-size="18.5" font-weight="500" fill="#c3c2d6">auto fines, overdue alerts, reports...all in</text><text class="serif" x="22" y="196" font-size="18.5" font-weight="500" fill="#c3c2d6">a desktop app.</text>
+  <text class="serif" x="22" y="152" font-size="18.5" font-weight="500" fill="#c3c2d6">A full MySQL library system: 3NF schema,</text><text class="serif" x="22" y="174" font-size="18.5" font-weight="500" fill="#c3c2d6">procedures, triggers and 10 reports. Tkinter</text><text class="serif" x="22" y="196" font-size="18.5" font-weight="500" fill="#c3c2d6">app in progress.</text>
   <rect x="22" y="216" width="52" height="26" rx="13" fill="#121741" stroke="#b89c60" stroke-opacity="0.24"/><text class="mono" x="48" y="233" text-anchor="middle" font-size="12" fill="#ece9f4">MySQL</text><rect x="80" y="216" width="59" height="26" rx="13" fill="#121741" stroke="#b89c60" stroke-opacity="0.24"/><text class="mono" x="109.5" y="233" text-anchor="middle" font-size="12" fill="#ece9f4">Python</text><rect x="145" y="216" width="66" height="26" rx="13" fill="#121741" stroke="#b89c60" stroke-opacity="0.24"/><text class="mono" x="178" y="233" text-anchor="middle" font-size="12" fill="#ece9f4">Tkinter</text>
   
 </g>
