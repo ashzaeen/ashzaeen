@@ -90,7 +90,13 @@ And all of that is just the trailer.
 **Recently pushed** <sub>(refreshes itself every few hours)</sub>
 
 <!--RECENT:START-->
-_Loads on the first run of the workflow._
+| Repo | What | Lang | Last push |
+| :-- | :-- | :-- | :-- |
+| [Shadow-AI-Guard](https://github.com/ashzaeen/Shadow-AI-Guard) | Work in progress | - | 1h ago |
+| [VLA-Failure-Analysis](https://github.com/ashzaeen/VLA-Failure-Analysis) | Attention-map analysis and failure analysis of the pi0 vision-language-action model on LIBERO. | Jupyter Notebook | 30h ago |
+| [MavDitto](https://github.com/ashzaeen/MavDitto) | Migration content QA: finds what was lost (not just reworded) between an old site and its replacement. | Python | 30h ago |
+| [Library-Management-System](https://github.com/ashzaeen/Library-Management-System) | Work in progress | - | 30h ago |
+| [Eigenpick](https://github.com/ashzaeen/Eigenpick) | Work in progress | - | 30h ago |
 <!--RECENT:END-->
 
 <br/>
