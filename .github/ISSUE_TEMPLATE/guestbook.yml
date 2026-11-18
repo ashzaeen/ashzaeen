@@ -1,0 +1,17 @@
+name: "Guestbook"
+description: Sign the guestbook. Your message shows up on the profile README.
+title: "Guestbook"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Say hi in one line. A bot adds it to the README within a minute, then closes this issue.
+        Plain text only: links and formatting are stripped, and anything past 140 characters is trimmed.
+  - type: textarea
+    id: message
+    attributes:
+      label: Your message
+      description: One line, plain text.
+      placeholder: "Loved the tiny planet. Who is the gold guy in headphones?"
+    validations:
+      required: true

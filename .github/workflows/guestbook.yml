@@ -1,0 +1,79 @@
+name: Guestbook
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: readme-writes
+  cancel-in-progress: false
+
+jobs:
+  sign:
+    # Only the guestbook form, only real users. The title is compared in an expression, never in a shell.
+    if: startsWith(github.event.issue.title, 'Guestbook') && github.event.issue.user.type == 'User'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add the entry to the README
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const issue = context.payload.issue;
+
+            // Everything from the issue is untrusted: reduce it to one short line of plain text.
+            let msg = String(issue.body || '')
+              .replace(/^###.*$/gm, ' ')
+              .replace(/_No response_/g, ' ')
+              .replace(/<[^>]*>/g, ' ')
+              .replace(/https?:\/\/\S+/gi, ' ')
+              .replace(/\bwww\.\S+/gi, ' ')
+              .replace(/\S+@\S+\.\S+/g, ' ')
+              .replace(/\b[a-z0-9-]+\.(com|net|org|io|dev|co|app|ai|me|xyz|ru|cn|tk|ly|gg|link|site|online)\b\S*/gi, ' ')
+              .replace(/[`*_~\[\]()|>#@\\!]/g, '')
+              .replace(/[\u0000-\u001f\u007f-\u009f​-‏‪-‮⁦-⁩]/g, ' ')
+              .replace(/\s+/g, ' ')
+              .trim();
+            if (msg.length > 140) msg = msg.slice(0, 137).trimEnd() + '...';
+
+            const { owner, repo } = context.repo;
+            const number = issue.number;
+            const close = async (body) => {
+              await github.rest.issues.createComment({ owner, repo, issue_number: number, body });
+              await github.rest.issues.update({ owner, repo, issue_number: number, state: 'closed', state_reason: 'completed' });
+            };
+
+            if (!msg) {
+              await close('Nothing to add (links and formatting are stripped). Feel free to try again with plain text.');
+              return;
+            }
+
+            const login = String(issue.user.login).replace(/[^A-Za-z0-9-]/g, '');
+            const entry = `- **[${login}](https://github.com/${login})** — ${msg}`;
+
+            const readme = fs.readFileSync('README.md', 'utf8');
+            const re = /(<!--GUESTBOOK:START-->\r?\n)([\s\S]*?)(\r?\n<!--GUESTBOOK:END-->)/;
+            const m = readme.match(re);
+            if (!m) { core.setFailed('Guestbook markers not found in README.md'); return; }
+
+            const old = m[2].split(/\r?\n/).filter((l) => l.startsWith('- **['));
+            const entries = [entry, ...old].slice(0, 8).join('\n');
+            fs.writeFileSync('README.md', readme.replace(re, (_, a, __, c) => a + entries + c));
+
+            await close('Thanks for signing! Your note is on the profile now.');
+
+      - name: Commit the README
+        run: |
+          if git diff --quiet; then echo "No changes."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "chore: new guestbook entry"
+          git pull --rebase -q
+          git push
