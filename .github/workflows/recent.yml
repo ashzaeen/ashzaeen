@@ -1,4 +1,4 @@
-name: Refresh recent activity
+name: Refresh recent activity and skyline
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [".github/scripts/recent.sh", ".github/workflows/recent.yml"]
+    paths: [".github/scripts/**", ".github/workflows/recent.yml"]
 
 permissions:
   contents: write
@@ -22,18 +22,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Rebuild the recent-activity table
+      - name: Redraw the constellation and the skyline
         env:
           GH_TOKEN: ${{ github.token }}
           OWNER: ${{ github.repository_owner }}
           SELF: ${{ github.event.repository.name }}
-        run: bash .github/scripts/recent.sh
+        run: node .github/scripts/build-activity.mjs
 
       - name: Commit if changed
         run: |
-          if git diff --quiet; then echo "No changes."; exit 0; fi
+          git add assets
+          if git diff --cached --quiet; then echo "No changes."; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "chore: refresh recent activity"
+          git commit -m "chore: refresh recent activity"
           git pull --rebase -q
           git push
