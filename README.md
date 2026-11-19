@@ -81,11 +81,11 @@ And all of that is just the trailer.
 <!--RECENT:START-->
 | Repo | What | Lang | Last push |
 | :-- | :-- | :-- | :-- |
-| [Library-Management-System](https://github.com/ashzaeen/Library-Management-System) | MySQL library system: 3NF schema, stored procedures, triggers, views, reports and a Tkinter desktop app | Python | 9h ago |
-| [Shadow-AI-Guard](https://github.com/ashzaeen/Shadow-AI-Guard) | Work in progress | - | 13h ago |
-| [VLA-Failure-Analysis](https://github.com/ashzaeen/VLA-Failure-Analysis) | Attention-map analysis and failure analysis of the pi0 vision-language-action model on LIBERO. | Jupyter Notebook | 42h ago |
-| [MavDitto](https://github.com/ashzaeen/MavDitto) | Migration content QA: finds what was lost (not just reworded) between an old site and its replacement. | Python | 42h ago |
-| [Eigenpick](https://github.com/ashzaeen/Eigenpick) | Work in progress | - | 42h ago |
+| [Library-Management-System](https://github.com/ashzaeen/Library-Management-System) | MySQL library system: 3NF schema, stored procedures, triggers, views, reports and a Tkinter desktop app | Python | 2h ago |
+| [MavDitto](https://github.com/ashzaeen/MavDitto) | A content operations toolkit for web teams: migration QA that finds lost content, link and alt-text audits, an on-brand Content Writer, and a component-based Web Builder. | Python | 3h ago |
+| [Dual-Portfolio-Site](https://github.com/ashzaeen/Dual-Portfolio-Site) | - | JavaScript | 7h ago |
+| [Shadow-AI-Guard](https://github.com/ashzaeen/Shadow-AI-Guard) | Work in progress | - | 21h ago |
+| [VLA-Failure-Analysis](https://github.com/ashzaeen/VLA-Failure-Analysis) | Attention-map analysis and failure analysis of the pi0 vision-language-action model on LIBERO. | Jupyter Notebook | 2d ago |
 <!--RECENT:END-->
 
 <br/>
