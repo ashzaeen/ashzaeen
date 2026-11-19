@@ -92,7 +92,7 @@ And all of that is just the trailer.
   <source media="(prefers-color-scheme: dark) and (max-width: 760px)" srcset="assets/skyline-m-dark.svg">
   <source media="(max-width: 760px)" srcset="assets/skyline-m-light.svg">
   <source media="(prefers-color-scheme: dark)" srcset="assets/skyline-dark.svg">
-  <img alt="My GitHub contribution graph as a night skyline: each building is one week, each lit window a day I shipped, and Pip stands on the tallest roof." src="assets/skyline-light.svg" width="100%">
+  <img alt="My commit history for the last year as a night skyline: each building is one week, its height is that week's commit count, each of its seven windows is a day and lights up if I committed that day, and Pip stands on the tallest roof. Refreshes itself every few hours." src="assets/skyline-light.svg" width="100%">
 </picture>
 </div>
 

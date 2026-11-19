@@ -127,7 +127,7 @@ const T = {
   light: { bg1: '#f9f2e1', bg2: '#ecdcb4', card: '#fbf6e8', ink: '#2a1e0e', body: '#4a3a22', mute: '#7a6a4c', brass: '#a07838', hi: '#7a5a1c', onGold: '#fff8e6', edge: .5, empty: '#e6d9b6', L: ['#e6d9b6', '#d9c288', '#c09a50', '#a07838', '#6e4a14'], dust: '#c8a050', dustO: .16, starO: .3 },
 };
 const STYLE = FONT + `.tw{animation:tw 4s ease-in-out infinite}.t1{animation-delay:-1s}.t2{animation-delay:-2s}.t3{animation-delay:-3s}@keyframes tw{0%,100%{opacity:.15}50%{opacity:.75}}`;
-const shell = (t, W, H, inner, extraStyle = '', defs = '') => `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Contribution graph: ${total} contributions in the last year"><defs>
+const shell = (t, W, H, inner, extraStyle = '', defs = '') => `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Commit history: ${total} commits in the last year"><defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.bg1}"/><stop offset="1" stop-color="${t.bg2}"/></linearGradient>
 <radialGradient id="gl" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="${t.hi}" stop-opacity=".6"/><stop offset="1" stop-color="${t.hi}" stop-opacity="0"/></radialGradient>${defs}
 <clipPath id="r"><rect width="${W}" height="${H}" rx="22"/></clipPath></defs>
@@ -147,22 +147,22 @@ function d4(t, m) {
   const W = m ? 400 : 1000, H = m ? 300 : 340, gy = m ? 252 : 296, x0 = m ? 22 : 38, pitch = m ? 13.9 : 17.8, bw = m ? 11 : 14;
   const WK = m ? weeks.slice(-26) : weeks, WS = m ? weekSum.slice(-26) : weekSum, mw = Math.max(1, ...WS);
   let b = stars(W, H, t, m ? 34 : 70, 7);
-  b += m ? `<text x="22" y="40" font-family="${mono}" font-size="11" letter-spacing="3" fill="${t.brass}">THE SKYLINE</text><text x="22" y="58" font-family="${mono}" font-size="9" letter-spacing="1.5" fill="${t.mute}">EVERY LIT WINDOW = A DAY SHIPPED</text>` : head(t, W, 'THE SKYLINE', 'EVERY LIT WINDOW IS A DAY I SHIPPED');
+  b += m ? `<text x="22" y="40" font-family="${mono}" font-size="11" letter-spacing="3" fill="${t.brass}">THE SKYLINE</text><text x="22" y="58" font-family="${mono}" font-size="9" letter-spacing="1.5" fill="${t.mute}">A LIT WINDOW = A DAY I COMMITTED</text>` : head(t, W, 'THE SKYLINE', 'A LIT WINDOW IS A DAY I COMMITTED');
   const mx = m ? 340 : 880, my = m ? 56 : 92;
   b += `<circle cx="${mx}" cy="${my}" r="18" fill="${t.hi}" opacity=".9"/><circle cx="${mx + 7}" cy="${my - 4}" r="16" fill="${t.dark ? '#0b0e2a' : '#f3e6c4'}" opacity=".92"/>`;
-  const hs = WS.map(s => (m ? 28 : 34) + (m ? 112 : 140) * Math.sqrt(s / mw));
+  const hs = WS.map(s => (m ? 64 : 72) + (m ? 96 : 110) * Math.sqrt(s / mw));
   let tallest = 0; hs.forEach((h, i) => { if (h > hs[tallest]) tallest = i; });
   WK.forEach((w, i) => {
-    const x = x0 + i * pitch, h = Math.round(hs[i] / 9) * 9, y = gy - h;
+    const x = x0 + i * pitch, h = hs[i], y = gy - h;
     b += `<rect x="${x}" y="${y}" width="${bw}" height="${h}" rx="2" fill="${t.card}" stroke="${t.brass}" stroke-opacity=".4"/>`;
-    const rows = Math.floor((h - 6) / 9), lit = w.filter(d => d.contributionCount).length;
-    for (let r = 0; r < rows; r++) for (let c = 0; c < 2; c++) { const idx = r * 2 + c, isLit = lit > 0 && (idx * 5 + i * 3) % Math.max(rows * 2, 1) < lit * 2;
-      b += `<rect x="${x + (m ? 1.5 : 2.5) + c * (m ? 5 : 6)}" y="${y + 4 + r * 9}" width="${m ? 3.4 : 4}" height="5" rx="1" fill="${isLit ? t.hi : t.dark ? '#1b2158' : '#d8caa0'}" opacity="${isLit ? 1 : .8}" ${isLit && (idx + i) % 5 === 0 ? `class="tw t${idx % 4}"` : ''}/>`; }
+    const step = (h - 14) / 6.6;
+    for (let r = 0; r < 7; r++) { const day = w[r], L = day ? lvl(day.contributionCount) : 0;
+      b += `<rect x="${x + (bw - (m ? 5 : 6)) / 2}" y="${y + 6 + r * step}" width="${m ? 5 : 6}" height="5" rx="1.2" fill="${L ? t.hi : t.dark ? '#1b2158' : '#d8caa0'}" opacity="${L ? .72 + L * .07 : .7}" ${L >= 3 ? `class="tw t${r % 4}"` : ''}/>`; }
   });
-  const tx = x0 + tallest * pitch + bw / 2, ty = gy - Math.round(hs[tallest] / 9) * 9;
+  const tx = x0 + tallest * pitch + bw / 2, ty = gy - hs[tallest];
   b += `<line x1="${tx + bw / 2 - 2}" y1="${ty}" x2="${tx + bw / 2 - 2}" y2="${ty - 20}" stroke="${t.brass}"/><circle cx="${tx + bw / 2 - 2}" cy="${ty - 22}" r="2.4" fill="#ff6b6b"><animate attributeName="opacity" values="1;.2;1" dur="1.6s" repeatCount="indefinite"/></circle>` + pip(tx - 2, ty, t, .72, false);
   b += `<rect x="${m ? 14 : 30}" y="${gy}" width="${W - (m ? 28 : 60)}" height="2" fill="${t.brass}" opacity=".5"/>`;
-  b += `<text x="${m ? 22 : 32}" y="${H - 14}" font-family="${mono}" font-size="${m ? 8.5 : 10}" letter-spacing="1" fill="${t.mute}">${m ? `${total} CONTRIBUTIONS · ${active} ACTIVE DAYS` : `${total} CONTRIBUTIONS · ${active} ACTIVE DAYS · TALLEST: ${fmt(busiest.date).toUpperCase()}`}</text>`;
+  b += `<text x="${m ? 22 : 32}" y="${H - 14}" font-family="${mono}" font-size="${m ? 8.5 : 10}" letter-spacing="1" fill="${t.mute}">${m ? `${total} COMMITS · ${active} ACTIVE DAYS` : `${total} COMMITS · ${active} ACTIVE DAYS · BUSIEST: ${fmt(busiest.date).toUpperCase()} (${busiest.contributionCount})`}</text>`;
   return shell(t, W, H, b);
 }
 
@@ -170,29 +170,46 @@ function d4(t, m) {
 }
 
 async function recent() {
-  const repos = (await api(`users/${OWNER}/repos?sort=pushed&per_page=30&type=owner`)).filter(r => !r.fork && !r.archived && !r.private && r.name !== SELF).slice(0, 5);
+  const repos = (await api(`users/${OWNER}/repos?sort=pushed&per_page=30&type=owner`)).filter(r => !r.fork && !r.archived && !r.private && r.name !== SELF);
   const since = new Date(Date.now() - 30 * 864e5).toISOString();
   const data = [];
   for (const r of repos) {
-    let c = []; try { c = await api(`repos/${OWNER}/${r.name}/commits?per_page=100&since=${since}`); } catch {}
-    let msg = ''; try { msg = (c[0] || (await api(`repos/${OWNER}/${r.name}/commits?per_page=1`))[0]).commit.message.split(String.fromCharCode(10))[0]; } catch {}
+    // only commits authored by the profile owner (teammates and bots do not count)
+    let c = []; try { c = await api(`repos/${OWNER}/${r.name}/commits?author=${OWNER}&per_page=100&since=${since}`); } catch {}
+    let first = c[0];
+    if (!first) { try { first = (await api(`repos/${OWNER}/${r.name}/commits?author=${OWNER}&per_page=1`))[0]; } catch {} }
+    if (!first) continue;
     const days = Array(30).fill(0); c.forEach(x => { const d = Math.floor((Date.now() - new Date(x.commit.author.date)) / 864e5); if (d >= 0 && d < 30) days[29 - d]++; });
-    data.push({ name: r.name, lang: r.language || null, pushed: r.pushed_at, msg, days });
+    data.push({ name: r.name, lang: r.language || null, pushed: first.commit.author.date, msg: first.commit.message.split(String.fromCharCode(10))[0], days });
   }
+  data.sort((a, b) => new Date(b.pushed) - new Date(a.pushed));
+  data.length = Math.min(data.length, 5);
   if (!data.length) throw new Error('no repos');
   const k = recentKit(data, FONT);
   for (const m of ['dark', 'light']) { fs.writeFileSync(path.join(OUT, `recent-${m}.svg`), k.desktop(k.T[m])); fs.writeFileSync(path.join(OUT, `recent-m-${m}.svg`), k.phone(k.T[m])); }
   console.log('recent ok', data.map(d => d.name).join(', '));
 }
+async function gql(query, variables) {
+  const r = await fetch('https://api.github.com/graphql', { method: 'POST', headers: H, body: JSON.stringify({ query, variables }) });
+  return r.json();
+}
 async function skyline() {
-  const q = 'query($l:String!){user(login:$l){contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{date contributionCount weekday}}}}}}';
-  const r = await fetch('https://api.github.com/graphql', { method: 'POST', headers: H, body: JSON.stringify({ query: q, variables: { l: OWNER } }) });
-  const j = await r.json(); const cal = j?.data?.user?.contributionsCollection?.contributionCalendar;
-  if (!cal) throw new Error('no calendar: ' + JSON.stringify(j).slice(0, 200));
+  const calQ = 'query($l:String!){user(login:$l){contributionsCollection{contributionCalendar{weeks{contributionDays{date weekday}}}}}}';
+  const comQ = 'query($l:String!){user(login:$l){contributionsCollection{commitContributionsByRepository(maxRepositories:100){contributions(first:100){nodes{occurredAt commitCount}}}}}}';
+  const cal = (await gql(calQ, { l: OWNER }))?.data?.user?.contributionsCollection?.contributionCalendar;
+  const by = (await gql(comQ, { l: OWNER }))?.data?.user?.contributionsCollection?.commitContributionsByRepository;
+  if (!cal || !by) throw new Error('no calendar or commit data');
+  // commits only: the calendar also counts issues, pull requests and new repos, which would overstate "commit history"
+  const perDay = {};
+  by.forEach(r => r.contributions.nodes.forEach(n => { const d = n.occurredAt.slice(0, 10); perDay[d] = (perDay[d] || 0) + n.commitCount; }));
+  let total = 0;
+  cal.weeks.forEach(w => w.contributionDays.forEach(d => { d.contributionCount = perDay[d.date] || 0; total += d.contributionCount; }));
+  cal.totalContributions = total;
   const k = skylineKit(cal, FONT);
   for (const m of ['dark', 'light']) { fs.writeFileSync(path.join(OUT, `skyline-${m}.svg`), k.d4(k.T[m], false)); fs.writeFileSync(path.join(OUT, `skyline-m-${m}.svg`), k.d4(k.T[m], true)); }
-  console.log('skyline ok', cal.totalContributions);
+  console.log('skyline ok', total, 'commits');
 }
 let failed = 0;
 for (const f of [recent, skyline]) { try { await f(); } catch (e) { failed++; console.error('::warning::' + f.name + ' failed: ' + e.message); } }
 if (failed === 2) process.exit(1);
+
